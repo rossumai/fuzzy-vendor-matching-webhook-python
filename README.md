@@ -3,6 +3,8 @@
 The connector matches extracted vendor name, address and VAT ID against a vendor database. 
 Any of these data is sufficient for the right vendor match.
 
+![Vendor Matching Connector](vendor_matching_connector.gif)
+
 To set the connector up:
 
   * `sudo apt install python3-pip` and `pip3 install -r requirements.txt`
