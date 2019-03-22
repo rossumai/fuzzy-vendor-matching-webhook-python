@@ -1,0 +1,11 @@
+VendorID;VendorName;Address1;Address2;Address3;City;State;ZipCode;Country;Telephone;VendorAccountGroup;IndustrySector;TaxID1;ActiveVendor;FileID
+5300;Schroeder and Sons;Koenigstrasse 49;;;Allershagen;Mecklenburg-Vorpommern;18069;DE;0381 12 71 17;FF;Retail trade;DE355869309;1;345
+2385;Adams-Bogan;Eichendorffstr. 52;;;Hergatz;Freistaat Bayern;88143;DE;7522439204;FF;Retail trade;DE379503850;1;345
+6122;McClure PLC;Chausseestr. 75;;;Pinneberg;Schleswig-Holstein;25402;DE;04101 52 33 02;GU;Retail trade;DE095739174;0;345
+6422;Emmerich-Ortiz;Feldstrasse 44;;;Altbrandsleben;Sachsen-Anhalt;39387;DE;3940793544;FF;Retail trade;DE958736283;1;345
+3562;Bosco Ltd;Flotowstr. 65;;;Aschersleben;Sachsen-Anhalt;6435;DE;3473255164;GU;Retail trade;DE758402667;1;56
+2522;Yundt, Marks and Halvorson;Alt Reinickendorf 4;;;Waltenhofen;Freistaat Bayern;87444;DE;8303887107;FF;Retail trade;DE857321223;0;56
+2416;Bernhard Group;Brandenburgische Strasse 55;;;Knittelsheim;Rheinland-Pfalz;76879;DE;06348 66 23 58;GU;Retail trade;DE757038244;1;56
+4685;Roodel;Rudolstaedter Strasse 79;;;Frammersbach;Freistaat Bayern;97829;DE;6020391953;FF;Retail trade;DE850271645;1;56
+2327;Synic;Hermannstrasse 50;;;Ellerstadt;Rheinland-Pfalz;67158;DE;06237 71 81 47;FF;Retail trade;DE849301847;1;56
+5843;Paralith LTD;Bayreuther Strasse 93;;;Frankfurt;Brandenburg;15230;DE;697491774;GU;Retail trade;DE839274940;1;56

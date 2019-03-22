@@ -1,0 +1,10 @@
+# Environment and configuration
+.idea
+venv
+.pgpass
+config2.py
+
+# Keep only .csv and .pdf files in supportive_data folder
+/supportive_data/**
+!/supportive_data/*.pdf
+!/supportive_data/*.csv
