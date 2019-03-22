@@ -50,3 +50,5 @@ To import testing vendor data to database:
 ```
     python3 import_vendor_data.py supportive_data/vendor_data_de.csv
 ```
+
+You can test the connector on data from `supportive_data` folder.

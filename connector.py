@@ -20,7 +20,11 @@ app = flask.Flask(__name__)
 
 
 def secret_key_required(f):
-    """API method wrapper that checks the secret key in authorization header."""
+    """API method wrapper that checks the secret key in authorization header.
+
+    :param f: Function on which the decorator will be used.
+    :return: authorize_request function.
+    """
 
     def authorize_user():
         """Checks the secret key against configured key.
