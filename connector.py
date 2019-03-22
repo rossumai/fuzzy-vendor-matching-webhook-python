@@ -43,7 +43,7 @@ def secret_key_required(f):
             raise ValueError('Invalid Authorization header')
 
         secret_key = parts[1]
-        if secret_key == config.CONNECTOR_SECRET_KEY['CONNECTOR_SECRET_KEY']:
+        if secret_key == config.CONNECTOR_AUTH_KEY['CONNECTOR_AUTH_KEY']:
             return True
         else:
             logging.error('Invalid Authorization secret key: %s' % secret_key)

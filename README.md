@@ -15,7 +15,7 @@ To run the connector:
 	python3 connector.py
 ```
 
-To configure an elis queue to use the connector:
+To configure an Elis queue to use the connector:
 ```
 	curl -u ELIS_USERNAME:ELIS_PASSWORD -H 'Content-Type: application/json' -d '{"name": "Vendor Matching Connector", /
 	"service_url": "SERVER_URL", "authorization_token":"AUTHENTICATION_TOKEN", /
@@ -25,7 +25,7 @@ where:
   * ELIS_USERNAME = account you use to login to Elis
   * ELIS_PASSWORD = password to your Elis account
   * SERVER_URL = url path of the server where the vendor matching connector is run
-  * AUTHENTICATION_TOKEN = the token Elis uses when accessing connector, stored in `config.py`.
+  * AUTHENTICATION_TOKEN = the token Elis uses when accessing connector, stored in `config.py` as CONNECTOR_AUTH_KEY.
   * QUEUE_NUMBER = number of the queue where the connector should run
 
 For more information on configuration see 
