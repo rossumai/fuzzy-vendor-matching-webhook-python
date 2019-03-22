@@ -1,4 +1,4 @@
-# Elis Vendor Matching Connector
+# Example Elis Vendor Matching Connector
 
 The connector matches extracted vendor name, address and VAT ID against a vendor database. 
 Any of these data is sufficient for the right vendor match.
