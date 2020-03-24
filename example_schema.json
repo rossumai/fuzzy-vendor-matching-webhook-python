@@ -250,7 +250,7 @@
           "required": false
         },
         "default_value": null,
-        "id": "vendor_tax_id",
+        "id": "vendor_vat_id",
         "label": "Vendor tax number",
         "rir_field_names": [
           "sender_dic"
