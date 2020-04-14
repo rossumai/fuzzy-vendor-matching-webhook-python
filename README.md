@@ -49,7 +49,7 @@ For more information on configuration see
 
 To configure the schema for connector to work:
 ```
-	elisctl queue change SCHEMA_ID -s example_schema.json
+	elisctl queue change 29582 SCHEMA_ID -s example_schema.json
 ```
 
 where:
