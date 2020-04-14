@@ -5,11 +5,29 @@ Any of these data is sufficient for the right vendor match.
 
 ![Vendor Matching Connector](vendor_matching_connector.gif)
 
-To set the connector up:
+For more details on how to run the connector see the information below or check out [a more detailed guide at our Developer Hub](https://developers.rossum.ai/docs/how-to-run-sample-vendor-matching-connector).
 
-  * `sudo apt install python3-pip` and `pip3 install -r requirements.txt`
-  * The access credentials for the PostgreSQL database are stored in `config.py` and `~/.pgpass` file.
+### Setup
+#### Set up the connector
+```
+sudo apt install python3-pip
+```
+```
+pip3 install -r requirements.txt
+```
 
+#### Set up the database
+
+The access credentials for the PostgreSQL database are stored in `config.py` and `~/.pgpass` file.
+
+As the sample vendor matching connector code uses a fuzzy matching trigram extension, you must call the extension before running the code.  
+After you have created the database, run the following query once:
+```
+CREATE EXTENSION IF NOT EXISTS pg_trgm;
+```
+This will initialize the trigram functionality that is used in the connector code.
+
+#### Set up the queue
 You can use [elisctl](https://github.com/rossumai/elisctl) tool to configure an Elis queue to use the connector.
 
 Create the connector first:
@@ -47,6 +65,7 @@ where:
 For more information on configuration see 
 <a href="https://api.elis.rossum.ai/docs/#overview">Elis Document Management API</a>.
 
+#### Set up the schema
 To configure the schema for connector to work:
 ```
 	elisctl queue change SCHEMA_ID -s example_schema.json
@@ -62,6 +81,7 @@ For more information on working with elisctl and its download see
 To use the connector for production, run via HTTPS using, for example, Nginx proxy with Let's encrypt 
 TLS/SSL certificate. 
 
+#### Fill the database with testing data
 To import testing vendor data to database:
 ```
     python3 import_vendor_data.py supportive_data/vendor_data_de.csv
