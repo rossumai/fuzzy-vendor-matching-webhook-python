@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-
-import time
-import psycopg2
-import threading
 import logging
-
+import threading
+import time
 from contextlib import closing
+
+import psycopg2
 
 import config
 

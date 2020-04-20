@@ -9,8 +9,8 @@ import logging
 import flask
 from flask import request, jsonify
 
-from database.database import DEDatabase
 import config
+from database.database import DEDatabase
 
 db = DEDatabase()
 
