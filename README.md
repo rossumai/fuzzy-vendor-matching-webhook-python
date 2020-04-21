@@ -39,7 +39,7 @@ Create the connector first:
 In the response, you will receive the ID of the connector. Next, choose an existing queue and deploy the connector to it:
 
 ```
-	 elisctl queue change 29582 --connector-id 1506
+	 elisctl queue change QUEUE_ID --connector-id 1506
 ```
 
 Or create a new queue and attach the connector to it:
@@ -53,14 +53,14 @@ You can also configure the connector using our API directly, for example:
 ```
 	curl -u ELIS_USERNAME:ELIS_PASSWORD -H 'Content-Type: application/json' -d '{"name": "Vendor Matching Connector", /
 	"service_url": "SERVER_URL", "authorization_token":"AUTHENTICATION_TOKEN", /
-	"queues":["https://api.elis.rossum.ai/v1/queues/QUEUE_NUMBER"]}' 'https://api.elis.rossum.ai/v1/connectors'
+	"queues":["https://api.elis.rossum.ai/v1/queues/QUEUE_ID"]}' 'https://api.elis.rossum.ai/v1/connectors'
 ```
 where:
   * ELIS_USERNAME = account you use to login to Elis
   * ELIS_PASSWORD = password to your Elis account
   * SERVER_URL = url path of the server where the vendor matching connector is run
   * AUTHENTICATION_TOKEN = the token Elis uses when accessing connector, stored in `config.py` as CONNECTOR_AUTH_KEY.
-  * QUEUE_NUMBER = number of the queue where the connector should run
+  * QUEUE_ID = number of the queue where the connector should run
 
 For more information on configuration see 
 <a href="https://api.elis.rossum.ai/docs/#overview">Elis Document Management API</a>.
@@ -68,7 +68,7 @@ For more information on configuration see
 #### Set up the schema
 To configure the schema for connector to work:
 ```
-	elisctl queue change SCHEMA_ID -s example_schema.json
+	elisctl queue change QUEUE_ID SCHEMA_ID -s example_schema.json
 ```
 
 where:
