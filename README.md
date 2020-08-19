@@ -5,86 +5,13 @@ Any of these data is sufficient for the right vendor match.
 
 ![Vendor Matching Connector](vendor_matching_connector.gif)
 
-For more details on how to run the connector see the information below or check out [a more detailed guide at our Developer Hub](https://developers.rossum.ai/docs/how-to-run-sample-vendor-matching-connector).
-
 ### Setup
-#### Set up the connector
-```
-sudo apt install python3-pip
-```
-```
-pip3 install -r requirements.txt
-```
+Check out our [Developer Hub vendor matching connector guide](https://developers.rossum.ai/docs/how-to-run-sample-vendor-matching-connector) to set up
+and run the connector for the first time.
 
-#### Set up the database
-
-The access credentials for the PostgreSQL database are stored in `config.py` and `~/.pgpass` file.
-
-As the sample vendor matching connector code uses a fuzzy matching trigram extension, you must call the extension before running the code.  
-After you have created the database, run the following query once:
-```
-CREATE EXTENSION IF NOT EXISTS pg_trgm;
-```
-This will initialize the trigram functionality that is used in the connector code.
-
-#### Set up the queue
-You can use [elisctl](https://github.com/rossumai/elisctl) tool to configure an Elis queue to use the connector.
-
-Create the connector first:
-
-```
-	 elisctl connector create "Python Example Connector" --service-url http://hostname:5000 --auth-token wuNg0OenyaeK4eenOovi7aiF
-```
-
-In the response, you will receive the ID of the connector. Next, choose an existing queue and deploy the connector to it:
-
-```
-	 elisctl queue change QUEUE_ID --connector-id 1506
-```
-
-Or create a new queue and attach the connector to it:
-
-```
-	 elisctl queue create "Python Connector Queue" --connector-id 1506 -s schema.json
-```
-
-You can also configure the connector using our API directly, for example:
-
-```
-	curl -u ELIS_USERNAME:ELIS_PASSWORD -H 'Content-Type: application/json' -d '{"name": "Vendor Matching Connector", /
-	"service_url": "SERVER_URL", "authorization_token":"AUTHENTICATION_TOKEN", /
-	"queues":["https://api.elis.rossum.ai/v1/queues/QUEUE_ID"]}' 'https://api.elis.rossum.ai/v1/connectors'
-```
-where:
-  * ELIS_USERNAME = account you use to login to Elis
-  * ELIS_PASSWORD = password to your Elis account
-  * SERVER_URL = url path of the server where the vendor matching connector is run
-  * AUTHENTICATION_TOKEN = the token Elis uses when accessing connector, stored in `config.py` as CONNECTOR_AUTH_KEY.
-  * QUEUE_ID = number of the queue where the connector should run
-
-For more information on configuration see 
-<a href="https://api.elis.rossum.ai/docs/#overview">Elis Document Management API</a>.
-
-#### Set up the schema
-To configure the schema for connector to work:
-```
-	elisctl queue change QUEUE_ID SCHEMA_ID -s example_schema.json
-```
-
-where:
-  * SCHEMA_ID = id of the schema that the connector should be run on
-  * example_schema.json = example schema that is set up to work with connector. Can be customized based on your needs.
-
-For more information on working with elisctl and its download see 
-<a href="https://github.com/rossumai/elisctl">elisctl Github page</a>.
+After setting up the connector, update `CONNECTOR_AUTH_KEY["CONNECTOR_AUTH_KEY"]` value in `config.py`.
+The value should be the same as the secret authentication token you created
+following the connector guide.
 
 To use the connector for production, run via HTTPS using, for example, Nginx proxy with Let's encrypt 
 TLS/SSL certificate. 
-
-#### Fill the database with testing data
-To import testing vendor data to database:
-```
-    python3 import_vendor_data.py supportive_data/vendor_data_de.csv
-```
-
-You can test the connector on data from `supportive_data` folder.
