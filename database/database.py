@@ -88,6 +88,6 @@ class Database:
         self.db_conn.rollback()
 
 
-class DEDatabase(Database):
+class VendorDatabase(Database):
     def __init__(self):
         super().__init__()

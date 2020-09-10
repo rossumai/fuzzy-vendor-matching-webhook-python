@@ -1,2 +1,10 @@
+Click
+et-xmlfile
 Flask
+itsdangerous
+jdcal
+Jinja2
+MarkupSafe
+openpyxl
 psycopg2
+Werkzeug

@@ -4,17 +4,15 @@
 
 import csv
 import sys
+from typing import Dict
 
-from database.database import DEDatabase
+from database.database import VendorDatabase
 
-db = DEDatabase()
+db = VendorDatabase()
 
 
-def vendor_import(row):
-    """Insert named rows in the order appropriate for the database schema.
-
-    :param row: Row with data in the imported csv file.
-    """
+def vendor_import(row: Dict):
+    """Insert named rows in the order appropriate for the database schema."""
     db.execute(
         "INSERT INTO vendor_data VALUES (" + ", ".join(["%s" for _ in range(15)]) + ")",
         list(
@@ -40,11 +38,8 @@ def vendor_import(row):
     )
 
 
-def db_import(filename):
-    """Create vendor table and import active vendors to it.
-
-    :param filename: CSV file with vendor data.
-    """
+def db_import(filename: str):
+    """Create vendor table and import active vendors to it."""
     db.execute(
         """CREATE TABLE IF NOT EXISTS vendor_data (
                 id VARCHAR(16) PRIMARY KEY,
