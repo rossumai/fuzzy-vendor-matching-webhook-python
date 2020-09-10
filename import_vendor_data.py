@@ -15,10 +15,29 @@ def vendor_import(row):
 
     :param row: Row with data in the imported csv file.
     """
-    db.execute('INSERT INTO vendor_data VALUES (' + ', '.join(['%s' for _ in range(15)]) + ')',
-               list(row[k] for k in ['VendorID', 'VendorName', 'Address1', 'Address2', 'Address3',
-                                     'City', 'State', 'ZipCode', 'Country', 'Telephone', 'VendorAccountGroup',
-                                     'IndustrySector', 'TaxID1', 'ActiveVendor', 'FileID']))
+    db.execute(
+        "INSERT INTO vendor_data VALUES (" + ", ".join(["%s" for _ in range(15)]) + ")",
+        list(
+            row[k]
+            for k in [
+                "VendorID",
+                "VendorName",
+                "Address1",
+                "Address2",
+                "Address3",
+                "City",
+                "State",
+                "ZipCode",
+                "Country",
+                "Telephone",
+                "VendorAccountGroup",
+                "IndustrySector",
+                "TaxID1",
+                "ActiveVendor",
+                "FileID",
+            ]
+        ),
+    )
 
 
 def db_import(filename):
@@ -26,7 +45,8 @@ def db_import(filename):
 
     :param filename: CSV file with vendor data.
     """
-    db.execute("""CREATE TABLE IF NOT EXISTS vendor_data (
+    db.execute(
+        """CREATE TABLE IF NOT EXISTS vendor_data (
                 id VARCHAR(16) PRIMARY KEY,
                 name TEXT NOT NULL,
                 address1 TEXT,
@@ -41,12 +61,13 @@ def db_import(filename):
                 industry_sector TEXT,
                 taxid1 TEXT,
                 active_vendor INT NOT NULL,
-                file_id TEXT);""")
+                file_id TEXT);"""
+    )
 
     with open(filename) as csvfile:
-        reader = csv.DictReader(csvfile, delimiter=';')
+        reader = csv.DictReader(csvfile, delimiter=";")
         for row in reader:
-            if row['ActiveVendor'] == '1':
+            if row["ActiveVendor"] == "1":
                 vendor_import(row)
     db.commit()
 

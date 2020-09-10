@@ -16,10 +16,12 @@ class Database:
     """self-reconnecting database object"""
 
     def __init__(self):
-        self.db_conn = psycopg2.connect(dbname=config.DATABASE_CONFIG['db_name'],
-                                        host=config.DATABASE_CONFIG['host'],
-                                        port=config.DATABASE_CONFIG['port'],
-                                        user=config.DATABASE_CONFIG['user_name'])
+        self.db_conn = psycopg2.connect(
+            dbname=config.DATABASE_CONFIG["db_name"],
+            host=config.DATABASE_CONFIG["host"],
+            port=config.DATABASE_CONFIG["port"],
+            user=config.DATABASE_CONFIG["user_name"],
+        )
 
     def execute(self, query, attrs=None):
         """execute a query and return one result"""
@@ -48,26 +50,30 @@ class Database:
                 cur.execute(query, attrs)
             return cur
         except psycopg2.DataError as error:  # when biitr comes and enters '99999999999999999999' for amount
-            logging.exception('We have invalid input data (SQLi?): level %s (%s) @%s' % (
-                level, error, time.strftime('%Y%m%d %a %I:%m %p')
-            ))
+            logging.exception(
+                "We have invalid input data (SQLi?): level %s (%s) @%s"
+                % (level, error, time.strftime("%Y%m%d %a %I:%m %p"))
+            )
             self.db_conn.rollback()
-            raise RuntimeError('Non-sanitized data entered again... BOBBY TABLES')
+            raise RuntimeError("Non-sanitized data entered again... BOBBY TABLES")
         except psycopg2.IntegrityError:
             # This is not an error that deserves to be treated
             # as dropped connection.
 
             raise
         except Exception as error:
-            logging.exception('Sleeping: level %s (%s) @%s' % (
-                level, error, time.strftime('%Y%m%d %a %I:%m %p')
-            ))
+            logging.exception(
+                "Sleeping: level %s (%s) @%s"
+                % (level, error, time.strftime("%Y%m%d %a %I:%m %p"))
+            )
             time.sleep(min(2 ** level, 30))
             try:
-                self.db_conn = psycopg2.connect(dbname=config.DATABASE_CONFIG['db_name'],
-                                                host=config.DATABASE_CONFIG['host'],
-                                                port=config.DATABASE_CONFIG['port'],
-                                                user=config.DATABASE_CONFIG['user_name'])
+                self.db_conn = psycopg2.connect(
+                    dbname=config.DATABASE_CONFIG["db_name"],
+                    host=config.DATABASE_CONFIG["host"],
+                    port=config.DATABASE_CONFIG["port"],
+                    user=config.DATABASE_CONFIG["user_name"],
+                )
             except:
                 time.sleep(1)
             cur = self.db_conn.cursor()
