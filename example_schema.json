@@ -215,7 +215,7 @@
       {
         "category": "datapoint",
         "constraints": {
-          "required": true
+          "required": false
         },
         "default_value": null,
         "id": "sender_address",
