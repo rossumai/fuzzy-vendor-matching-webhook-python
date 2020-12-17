@@ -1,8 +1,10 @@
 # Environment and configuration
 .idea
+.venv
 venv
 .pgpass
 config2.py
+__pycache__/
 
 # Keep only .csv and .pdf files in supportive_data folder
 /supportive_data/**
