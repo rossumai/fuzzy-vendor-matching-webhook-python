@@ -4,24 +4,36 @@ import logging
 import threading
 import time
 from contextlib import closing
-
 import psycopg2
-
-import config
+from fuzzy_vendor_matching_webhook_python.config import get_database_config
 
 __threadLocal = threading.local()
 
 
 class Database:
+    username = None
+    password = None
+    database = None
+    hostname = None
+    _db_conn = None
+
     """self-reconnecting database object"""
 
-    def __init__(self):
-        self.db_conn = psycopg2.connect(
-            dbname=config.DATABASE_CONFIG["db_name"],
-            host=config.DATABASE_CONFIG["host"],
-            port=config.DATABASE_CONFIG["port"],
-            user=config.DATABASE_CONFIG["user_name"],
+    @property
+    def db_conn(self):
+        if self._db_conn:
+            return self._db_conn
+
+        database_config = get_database_config()
+        self.username = database_config["username"]
+        self.password = database_config["password"]
+        self.database = database_config["database"]
+        self.hostname = database_config["hostname"]
+
+        self._db_conn = psycopg2.connect(
+            dbname=self.database, host=self.hostname, user=self.username, password=self.password,
         )
+        return self._db_conn
 
     def execute(self, query, attrs=None):
         """execute a query and return one result"""
@@ -63,16 +75,15 @@ class Database:
             raise
         except Exception as error:
             logging.exception(
-                "Sleeping: level %s (%s) @%s"
-                % (level, error, time.strftime("%Y%m%d %a %I:%m %p"))
+                "Sleeping: level %s (%s) @%s" % (level, error, time.strftime("%Y%m%d %a %I:%m %p"))
             )
             time.sleep(min(2 ** level, 30))
             try:
                 self.db_conn = psycopg2.connect(
-                    dbname=config.DATABASE_CONFIG["db_name"],
-                    host=config.DATABASE_CONFIG["host"],
-                    port=config.DATABASE_CONFIG["port"],
-                    user=config.DATABASE_CONFIG["user_name"],
+                    dbname=self.database,
+                    host=self.hostname,
+                    user=self.username,
+                    password=self.password,
                 )
             except:
                 time.sleep(1)

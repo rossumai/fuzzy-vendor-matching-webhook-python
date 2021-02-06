@@ -7,19 +7,11 @@ import hmac
 from functools import wraps
 from typing import List, Dict
 
-import flask
 from flask import request, jsonify
 from werkzeug.exceptions import abort
 
-from database.database import VendorDatabase
-
-db = VendorDatabase()
-
-
-app = flask.Flask(__name__)
-# app.config["DEBUG"] = True
-
-SECRET_KEY = "Your secret key stored in hook.config.secret"  # never store this in code
+from fuzzy_vendor_matching_webhook_python.config import SECRET_KEY
+from fuzzy_vendor_matching_webhook_python.import_vendor_data import db
 
 
 def hmac_signature_required(f):
@@ -87,24 +79,22 @@ def match_vendor(annotation_tree: List[dict], updated_datapoints: List[int], act
     )
 
     # Do not update the list unless we have a reason.
-    if not (action == "initialize" or
-            vendor_vat_id["id"] in updated_datapoints or
-            vendor_name["id"] in updated_datapoints or
-            vendor_address["id"] in updated_datapoints):
+    if not (
+        action == "initialize"
+        or vendor_vat_id["id"] in updated_datapoints
+        or vendor_name["id"] in updated_datapoints
+        or vendor_address["id"] in updated_datapoints
+    ):
         return
 
     messages = []
     if results and (
-        vendor_vat_id_norm
-        or vendor_name["content"]["value"]
-        or vendor_address["content"]["value"]
+        vendor_vat_id_norm or vendor_name["content"]["value"] or vendor_address["content"]["value"]
     ):
         vendor_options = [{"value": id, "label": vendor} for id, vendor in results]
     else:
         vendor_options = [{"value": "---", "label": "---"}]
-        messages = [
-            {"id": vendor["id"], "type": "error", "content": "Vendor not found."}
-        ]
+        messages = [{"id": vendor["id"], "type": "error", "content": "Vendor not found."}]
     operations = [
         {
             "op": "replace",
@@ -119,7 +109,6 @@ def match_vendor(annotation_tree: List[dict], updated_datapoints: List[int], act
     return messages, operations
 
 
-@app.route("/vendor_matching", methods=["POST"])
 @hmac_signature_required
 def vendor_matching():
     """Validate vendor name."""
@@ -128,7 +117,3 @@ def vendor_matching():
     action = request.json["action"]
     messages, operations = match_vendor(annotation_tree, updated_datapoints, action)
     return jsonify({"messages": messages, "operations": operations})
-
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)

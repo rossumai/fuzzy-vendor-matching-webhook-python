@@ -67,5 +67,14 @@ def db_import(filename: str):
     db.commit()
 
 
+def db_drop_vendor_data():
+    db.execute(
+        """
+        DROP TABLE vendor_data;
+        """
+    )
+    db.commit()
+
+
 if __name__ == "__main__":
     db_import(sys.argv[1])
